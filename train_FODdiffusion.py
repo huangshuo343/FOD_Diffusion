@@ -14,26 +14,7 @@ from pytorch_lightning.callbacks import ModelCheckpoint
 import argparse
 # import torch
 
-# CUDA_VISIBLE_DEVICES=2 python train_MRI2CT.py --cfg cfgs/train/train_updated_CA_40000steps.yaml 1. noact 2. SiLu
-# CUDA_VISIBLE_DEVICES=3 python train_MRI2CT.py --cfg cfgs/train/train_updated_CA_HCPaging.yaml
-
-# CUDA_VISIBLE_DEVICES=3 python train_MRI2CT.py --cfg cfgs/train/train_distortion_painting.yaml
-# CUDA_VISIBLE_DEVICES=2 python train_MRI2CT.py --cfg cfgs/train/train_base_ddpm.yaml
-# CUDA_VISIBLE_DEVICES=1 python train_MRI2CT.py --cfg cfgs/train/train_ablation_3.yaml
-# CUDA_VISIBLE_DEVICES=2 python train_MRI2CT.py --cfg cfgs/train/train_ablation_2.yaml
-# CUDA_VISIBLE_DEVICES=3 python train_MRI2CT.py --cfg cfgs/train/train_ablation_1.yaml
-# CUDA_VISIBLE_DEVICES=3 python train_MRI2CT.py --cfg cfgs/train/train_base_FODUnet.yaml
-# CUDA_VISIBLE_DEVICES=2 python train_MRI2CT.py --cfg cfgs/train/train_base_45chUnet.yaml
-# CUDA_VISIBLE_DEVICES=2 python train_MRI2CT.py --cfg cfgs/train/train_updated_CA_ablation2plus3.yaml
-# CUDA_VISIBLE_DEVICES=4 python train_MRI2CT.py --cfg cfgs/train/train_AE3D_45volumes.yaml
-# CUDA_VISIBLE_DEVICES=3 python train_MRI2CT.py --cfg cfgs/train/train_latent_FODdiffusion.yaml
-# CUDA_VISIBLE_DEVICES=2 python train_MRI2CT.py --cfg cfgs/train/train_latent_FODdiffusion_attentionmore.yaml
-# CUDA_VISIBLE_DEVICES=6 python train_MRI2CT.py --cfg cfgs/train/train_AE3D_orderwise.yaml
-# CUDA_VISIBLE_DEVICES=3 python train_MRI2CT.py --cfg cfgs/train/train_AE3D_orderwise_originalrange.yaml
-
-# another region: CUDA_VISIBLE_DEVICES=1 python train_MRI2CT.py --cfg cfgs/train/another_region/train_updated_CA_another_region.yaml
-
-# super resolution: CUDA_VISIBLE_DEVICES=5 python train_MRI2CT.py --cfg cfgs/train/train_latent_FODsuperresolution_45channels_originalsize.yaml
+# CUDA_VISIBLE_DEVICES=3 python train_FODdiffusion.py --cfg cfgs/train/train_AE3D_orderwise_originalrange.yaml
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="MedDiffusion Training Script")

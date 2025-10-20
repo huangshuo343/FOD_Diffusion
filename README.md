@@ -11,7 +11,7 @@ Figure 1 shows the workflow of our method.
 
 If you think our work useful, please cite it as:
 
-``bibtex
+```bibtex
 @article{huang2024diffusion,
   title={Diffusion Model-based FOD Restoration from High Distortion in dMRI},
   author={Huang, Shuo and Zhong, Lujia and Shi, Yonggang},

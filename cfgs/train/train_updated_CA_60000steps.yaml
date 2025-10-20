@@ -1,0 +1,76 @@
+_base_:
+  - cfgs/models/diffusionBase.yaml
+  - cfgs/datasets/datasetBase.yaml
+
+training:
+  resume_path: "/ifs/loni/faculty/shi/spectrum/Student_2020/huangshuo/distortion_painting/logs/FOD_distortion_removal/train_2024-01-30_21-14-20/checkpoints/epoch=143-step=73007 copy.ckpt" #/ifs/loni/faculty/shi/spectrum/Student_2020/huangshuo/distortion_painting/lightning_logs/version_23/checkpoints/epoch=5151-step=5151.ckpt #/ifs/loni/faculty/shi/spectrum/Student_2020/huangshuo/distortion_painting/logs/FOD_distortion_removal/train_2024-01-19_13-54-39/checkpoints/epoch=4-step=2534.ckpt
+  batch_size: 8
+  learning_rate: 2e-6 #2e-6 # 2e-4
+
+  gpus: 1
+  max_steps: 20000 #25000 #100000 #97466
+  accumulate_grad_batches: 1
+
+model:
+  target: mdm.med_v2v_updated_CA_noact.v2vLDM
+  params:
+    dims: 3
+    beta_schedule: "cosine"
+    parameterization: "v"
+    mask_key: mask
+    loss_type: "l1"
+
+    unet_config:
+      target: mdm.med_v2v_updated_CA_noact.ControlledUnetModel
+      params:
+        dims: 3
+        in_channels: 2
+        out_channels: 1
+        model_channels: 32 #16 96 48 16 32
+        attention_resolutions: [8, 4, 2, 1 ]
+        num_attention_blocks: [ 0, 2, 2, 2 ] #attention_resolutions: [ 8, 4, 2, 1 ] 8 is attention resolution, 加上最后一位才能用. num_attention_blocks: [ 0, 2, 2, 2 ]
+
+    feat_extract_stage_config:
+      target: mdm.med_v2v_updated_CA_noact.FeatExtractNet
+      params:
+        dims: 3
+        in_channels: 5
+        out_channels: 1
+        model_channels: 32 #the 2 model channels need to be equal.
+
+
+dataset:
+  target: dataset.MyDatasetRefineMask
+  params:
+    root_path: ""
+    json_paths: ["./data/diffusion_brainstem_painting_4D_training.json"] # ./data/diffusion_brainstem_painting.json
+    src_transform: [] # utils.transform.add_channel_at_last_dim
+    attn_transform: [utils.transform.add_channel_at_last_dim]
+    tgt_transform: [utils.transform.add_channel_at_last_dim] # , utils.transform._0_1_to_minus1_1
+    mask_transform: [utils.transform.add_channel_at_last_dim] # utils.transform.put_last_channel_at_first_dim
+
+val_dataset:
+  target: dataset.MyDatasetRefineMask
+  params:
+    root_path: ""
+    json_paths: ["./data/diffusion_brainstem_painting_4D_validation.json"] # ./data/diffusion_brainstem_painting.json
+    src_transform: [] # utils.transform.add_channel_at_last_dim
+    attn_transform: [utils.transform.add_channel_at_last_dim]
+    tgt_transform: [utils.transform.add_channel_at_last_dim] # , utils.transform._0_1_to_minus1_1
+    mask_transform: [utils.transform.add_channel_at_last_dim] # utils.transform.put_last_channel_at_first_dim
+
+test_dataset:
+  target: dataset.MyDatasetRefineMask
+  params:
+    root_path: ""
+    json_paths: ["./data/diffusion_brainstem_painting_4D_test.json"] # ./data/diffusion_brainstem_painting.json
+    src_transform: [] # utils.transform.add_channel_at_last_dim
+    attn_transform: [utils.transform.add_channel_at_last_dim]
+    tgt_transform: [utils.transform.add_channel_at_last_dim] # , utils.transform._0_1_to_minus1_1
+    mask_transform: [utils.transform.add_channel_at_last_dim] # utils.transform.put_last_channel_at_first_dim
+
+logger:
+  batch_frequency: 300
+  dataset_config: "3d" # 3d_3ch, only for logger
+  rescale: True
+  experiment_name: "FOD_distortion_removal"

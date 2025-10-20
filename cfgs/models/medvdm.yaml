@@ -1,0 +1,47 @@
+model:
+  target: mdm.medvdm.ControlLDM
+  params:
+    linear_start: 0.00085     # beta start
+    linear_end: 0.0120        # beta end
+    log_every_t: 200          # log intermediates for every t timesteps in sampling process
+    timesteps: 1000           # forward/noising steps
+    target_key: "jpg"         # key of the target image in the dataset
+    control_key: "hint"       # key of the control image in the dataset
+
+    parameterization: "eps"
+
+    # image_size: 128         # not used cause only used for sampling of ddpm and ldm, we use ddim
+    # channels: 1             # not used cause only used for sampling of ddpm and ldm, we use ddim
+    # scale_factor: 0.18215   # not used cause only for vae encoding and decoding
+
+    control_stage_config:
+      target: mdm.medvdm.SideUnetModel
+      params:
+        in_channels: 1
+        hint_channels: 1
+        model_channels: 96
+        attention_resolutions: [ 4, 2, 1 ]
+        num_res_blocks: 2
+        channel_mult: [ 1, 2, 4, 4 ]
+        num_heads: 8
+        use_spatial_transformer: False
+        transformer_depth: 1 # decide the number of the BasicTransformerBlock in SpatialTransformer
+        context_dim: -1 # -1 is to tell the model to use the exact same dim as the input (only for the unconditioning case)
+        use_checkpoint: True      # use checkpointing to save memory
+        legacy: False
+
+    unet_config:
+      target: mdm.medvdm.MainUnetModel
+      params:
+        in_channels: 1
+        out_channels: 1
+        model_channels: 96
+        attention_resolutions: [ 4, 2, 1 ]
+        num_res_blocks: 2
+        channel_mult: [ 1, 2, 4, 4 ]
+        num_heads: 8
+        use_spatial_transformer: False
+        transformer_depth: 1
+        context_dim: -1
+        use_checkpoint: True      # use checkpointing to save memory
+        legacy: False

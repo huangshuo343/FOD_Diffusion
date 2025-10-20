@@ -1,0 +1,7 @@
+dataset:
+  target: dataset.DatasetBase
+  params:
+    json_paths: [""]
+    root_path: "/ifs/loni/faculty/shi/spectrum/Student_2020/lzhong/MRI2CT"
+    src_transform: utils.transform.identity_transform
+    tgt_transform: utils.transform.identity_transform

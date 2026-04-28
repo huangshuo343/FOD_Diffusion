@@ -16,6 +16,7 @@ If you think our work useful, please cite it as:
   title={Diffusion-based generative fiber orientation restoration from severe signal loss in diffusion-weighted MRI},
   author={Huang, Shuo and Zhong, Lujia and Shi, Yonggang},
   journal={Medical Image Analysis},
+  volume={112},
   pages={104097},
   year={2026},
   publisher={Elsevier}

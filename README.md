@@ -12,10 +12,11 @@ Figure 1 shows the workflow of our method.
 If you think our work useful, please cite it as:
 
 ```bibtex
-@article{huang2024diffusion,
-  title={Diffusion Model-based FOD Restoration from High Distortion in dMRI},
+@article{huang2026diffusion,
+  title={Diffusion-based generative fiber orientation restoration from severe signal loss in diffusion-weighted MRI},
   author={Huang, Shuo and Zhong, Lujia and Shi, Yonggang},
-  journal={ArXiv},
-  pages={arXiv--2406},
-  year={2024}
+  journal={Medical Image Analysis},
+  pages={104097},
+  year={2026},
+  publisher={Elsevier}
 }
